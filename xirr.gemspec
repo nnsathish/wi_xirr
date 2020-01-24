@@ -1,4 +1,4 @@
-Gem::Specification.new "xirr", "1.0" do |s|
+Gem::Specification.new "xirr", "1.0.0" do |s|
   s.name = "xirr"
   s.authors = 'Weinvest'
   s.version = 1.0
