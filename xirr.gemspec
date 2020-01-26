@@ -1,7 +1,7 @@
 $:.push File.expand_path("lib", __dir__)
 require "xirr/version"
 
-Gem::Specification.new "xirr", "1.0.0" do |s|
+Gem::Specification.new "xirr" do |s|
   s.name = "xirr"
   s.authors = 'Weinvest'
   s.version = Xirr::VERSION
