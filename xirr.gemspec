@@ -9,4 +9,6 @@ Gem::Specification.new "xirr" do |s|
   s.files = Dir.glob("ext/**/*.{c,rb}") + Dir.glob("lib/**/*.rb")
   s.extensions << "ext/xirr/extconf.rb"
   s.add_development_dependency "rake-compiler"
+  s.add_development_dependency "rspec"
+  s.add_development_dependency "byebug"
 end
