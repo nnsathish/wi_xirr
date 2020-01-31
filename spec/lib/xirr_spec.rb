@@ -113,4 +113,63 @@ describe Xirr do
     end
   end
 
+  context 'for benchmarking purpose' do
+    xit 'returns xirr' do
+      data = [
+        [100000, Time.parse('2011-12-07').to_f],
+        [2000, Time.parse('2011-12-07').to_f],
+        [2000, Time.parse('2011-12-07').to_f],
+        [2000, Time.parse('2012-01-18').to_f],
+        [-10000, Time.parse('2012-07-03').to_f],
+        [2000, Time.parse('2012-07-03').to_f],
+        [2000, Time.parse('2012-07-19').to_f],
+        [1000, Time.parse('2012-07-23').to_f],
+        [2500, Time.parse('2012-07-23').to_f],
+        [2500, Time.parse('2012-07-23').to_f],
+        [-10000, Time.parse('2012-09-11').to_f],
+        [-10000, Time.parse('2012-09-11').to_f],
+        [-20000, Time.parse('2012-09-11').to_f],
+        [10000, Time.parse('2012-09-11').to_f],
+        [2000, Time.parse('2012-09-12').to_f],
+        [2000, Time.parse('2012-09-12').to_f],
+        [2000, Time.parse('2012-09-12').to_f],
+        [2000, Time.parse('2012-09-12').to_f],
+        [2000, Time.parse('2013-03-11').to_f],
+        [2000, Time.parse('2013-03-11').to_f],
+        [-10000, Time.parse('2013-03-11').to_f],
+        [2000, Time.parse('2011-12-07').to_f],
+        [2000, Time.parse('2011-12-07').to_f],
+        [2000, Time.parse('2012-01-18').to_f],
+        [-10000, Time.parse('2012-07-03').to_f],
+        [2000, Time.parse('2012-07-03').to_f],
+        [2000, Time.parse('2012-07-19').to_f],
+        [1000, Time.parse('2012-07-23').to_f],
+        [2500, Time.parse('2012-07-23').to_f],
+        [2500, Time.parse('2012-07-23').to_f],
+        [-10000, Time.parse('2012-09-11').to_f],
+        [-10000, Time.parse('2012-09-11').to_f],
+        [-20000, Time.parse('2012-09-11').to_f],
+        [10000, Time.parse('2012-09-11').to_f],
+        [2000, Time.parse('2012-09-12').to_f],
+        [2000, Time.parse('2012-09-12').to_f],
+        [2000, Time.parse('2012-09-12').to_f],
+        [2000, Time.parse('2012-09-12').to_f],
+        [2000, Time.parse('2013-03-11').to_f],
+        [2000, Time.parse('2013-03-11').to_f],
+        [-10000, Time.parse('2013-03-11').to_f],
+        [2500, Time.parse('2013-03-11').to_f],
+        [2500, Time.parse('2013-03-28').to_f],
+        [-90000, Time.parse('2013-03-28').to_f]
+      ]
+      amounts = []
+      dates = []
+      data.each do | d |
+        amounts << d[0]
+        dates << d[1]
+      end
+      benches = Benchmark.measure { (1..100000).each { |i| result = Xirr.calculate(amounts, dates, 0) }}
+      expect(benches.total).to be_within(0.2).of(0.6)
+    end
+  end
+
 end
