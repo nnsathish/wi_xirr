@@ -4,10 +4,6 @@ pipeline {
     stage('install') {
       steps {
         sh 'bundle install'
-      }
-    }
-    stage('compile') {
-      steps {
         sh 'rake compile'
       }
     }
