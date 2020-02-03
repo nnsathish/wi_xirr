@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    xirr (1.0.3)
+    wi_xirr (1.0.4)
 
 GEM
   remote: https://rubygems.org/
@@ -32,7 +32,7 @@ DEPENDENCIES
   byebug
   rake-compiler
   rspec
-  xirr!
+  wi_xirr!
 
 BUNDLED WITH
    1.17.3

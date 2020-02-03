@@ -3,16 +3,16 @@
 # include <stdio.h>
 # include <ruby.h>
 
-VALUE Xirr = Qnil;
+VALUE WiXirr = Qnil;
 
-void Init_xirr();
+void Init_wi_xirr();
 VALUE calculate(VALUE self, VALUE rb_amounts, VALUE rb_dates, VALUE guess);
 double get_fx(double x, double amounts[], double investmentPreiods[], int numberOfTransactions);
 double get_derivative_for_x(double x, double amounts[], double investmentPreiods[], int numberOfTransactions);
 
-void Init_xirr() {
-  Xirr = rb_const_get(rb_cObject, rb_intern("Xirr"));
-  rb_define_module_function(Xirr, "calculate", calculate, 3);
+void Init_wi_xirr() {
+  WiXirr = rb_const_get(rb_cObject, rb_intern("WiXirr"));
+  rb_define_module_function(WiXirr, "calculate", calculate, 3);
 }
 
 VALUE calculate(VALUE self, VALUE rb_amounts, VALUE rb_dates, VALUE guess) {
