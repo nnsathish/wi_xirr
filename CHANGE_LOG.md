@@ -1,3 +1,7 @@
+## Version 1.0.4
+  * Added a benchmarking spec with 50 transactions
+  * Renamed the gem to 'wi_xirr'
+
 ## Version 1.0.3
   * Added specs
 
