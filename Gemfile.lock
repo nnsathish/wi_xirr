@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    wi_xirr (1.0.5)
+    wi_xirr (0)
 
 GEM
   remote: https://rubygems.org/

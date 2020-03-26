@@ -1,3 +1,3 @@
 module WiXirr
-  VERSION = '0' # Placeholder version
+  VERSION = '1.0.5' # Placeholder version
 end
