@@ -113,6 +113,15 @@ describe WiXirr do
     end
   end
 
+  context 'to handle non-converging input' do
+    let(:amounts) { [-1293.6, 1990, -1590, 1990] }
+    let(:dates) { [1549955890, 1547104687.0, 1547191087.0, 1549955888.0] }
+    it 'should return -1 instead of going in a infinte loop' do
+      result = WiXirr.calculate(amounts, dates, 0)
+      expect(result).to be_within(0.00001).of(-1)
+    end
+  end
+
   context 'for benchmarking purpose' do
     xit 'returns xirr' do
       data = [
