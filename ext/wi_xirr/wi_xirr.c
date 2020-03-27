@@ -36,7 +36,7 @@ VALUE calculate(VALUE self, VALUE rb_amounts, VALUE rb_dates, VALUE guess) {
   // Solving for 0 npv by Newton's Method
   double init_guess = NUM2DBL(guess);
   double irr = init_guess, delta_x = 0.0;
-  int number_of_iterations = 0, max_iterations = 1000000;
+  int number_of_iterations = 0, max_iterations = 100;
   do {
     irr -= delta_x;
     if (irr == -1.0) {
