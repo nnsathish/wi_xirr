@@ -6,17 +6,18 @@
 VALUE WiXirr = Qnil;
 
 void Init_wi_xirr();
-VALUE calculate(VALUE self, VALUE rb_amounts, VALUE rb_dates, VALUE guess);
+VALUE calculate(VALUE self, VALUE rb_amounts, VALUE rb_dates, VALUE guess, VALUE maximum_iterations);
 double get_fx(double x, double amounts[], double investmentPreiods[], int numberOfTransactions);
 double get_derivative_for_x(double x, double amounts[], double investmentPreiods[], int numberOfTransactions);
 
 void Init_wi_xirr() {
   WiXirr = rb_const_get(rb_cObject, rb_intern("WiXirr"));
-  rb_define_module_function(WiXirr, "calculate", calculate, 3);
+  rb_define_module_function(WiXirr, "calculate", calculate, 4);
 }
 
-VALUE calculate(VALUE self, VALUE rb_amounts, VALUE rb_dates, VALUE guess) {
+VALUE calculate(VALUE self, VALUE rb_amounts, VALUE rb_dates, VALUE guess, VALUE maximum_iterations) {
   // Fixed variables
+  int max_iterations = NUM2INT(maximum_iterations);
   int length = (int)RARRAY_LEN(rb_amounts);
   double delta = 1E-8;
   double investment_periods[length], amounts[length], dates[length];
@@ -36,7 +37,7 @@ VALUE calculate(VALUE self, VALUE rb_amounts, VALUE rb_dates, VALUE guess) {
   // Solving for 0 npv by Newton's Method
   double init_guess = NUM2DBL(guess);
   double irr = init_guess, delta_x = 0.0;
-  int number_of_iterations = 0, max_iterations = 100;
+  int number_of_iterations = 0;
   do {
     irr -= delta_x;
     if (irr == -1.0) {
