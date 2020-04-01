@@ -1,3 +1,6 @@
+## Version 1.0.5
+  * Added an additional variable to check for max iterations to prevent it from trying to find a root infinitely for a set of inputs without a converging root.
+
 ## Version 1.0.4
   * Added a benchmarking spec with 50 transactions
   * Renamed the gem to 'wi_xirr'

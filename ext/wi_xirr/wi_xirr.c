@@ -6,17 +6,18 @@
 VALUE WiXirr = Qnil;
 
 void Init_wi_xirr();
-VALUE calculate(VALUE self, VALUE rb_amounts, VALUE rb_dates, VALUE guess);
+VALUE calculate(VALUE self, VALUE rb_amounts, VALUE rb_dates, VALUE guess, VALUE maximum_iterations);
 double get_fx(double x, double amounts[], double investmentPreiods[], int numberOfTransactions);
 double get_derivative_for_x(double x, double amounts[], double investmentPreiods[], int numberOfTransactions);
 
 void Init_wi_xirr() {
   WiXirr = rb_const_get(rb_cObject, rb_intern("WiXirr"));
-  rb_define_module_function(WiXirr, "calculate", calculate, 3);
+  rb_define_module_function(WiXirr, "calculate", calculate, 4);
 }
 
-VALUE calculate(VALUE self, VALUE rb_amounts, VALUE rb_dates, VALUE guess) {
+VALUE calculate(VALUE self, VALUE rb_amounts, VALUE rb_dates, VALUE guess, VALUE maximum_iterations) {
   // Fixed variables
+  int max_iterations = NUM2INT(maximum_iterations);
   int length = (int)RARRAY_LEN(rb_amounts);
   double delta = 1E-8;
   double investment_periods[length], amounts[length], dates[length];
@@ -33,20 +34,10 @@ VALUE calculate(VALUE self, VALUE rb_amounts, VALUE rb_dates, VALUE guess) {
   for(int i = 0; i < length; i++)
     investment_periods[i] = (dates[i] - min_date);
 
-  // Solving for 0 npv by bisection method
-  // double left_guess = -49.99/365.0, right_guess = 49.99/365.0;
-  // while((right_guess - left_guess) > (2 * delta)) {
-  //   double mid = (right_guess + left_guess) / 2;
-  //   if (get_fx(left_guess, amounts, investment_periods, length) * get_fx(mid, amounts, investment_periods, length) > 0)
-  //     left_guess = mid;
-  //   else
-  //     right_guess = mid;
-  // }
-  // double irr = (left_guess + right_guess) / 2.0;
-
   // Solving for 0 npv by Newton's Method
   double init_guess = NUM2DBL(guess);
   double irr = init_guess, delta_x = 0.0;
+  int number_of_iterations = 0;
   do {
     irr -= delta_x;
     if (irr == -1.0) {
@@ -59,8 +50,11 @@ VALUE calculate(VALUE self, VALUE rb_amounts, VALUE rb_dates, VALUE guess) {
       break;
     }
     delta_x = fx / derivative_at_x;
-  } while(fabs(delta_x) > delta);
-
+    number_of_iterations += 1;
+  } while((fabs(delta_x) > delta) && (number_of_iterations < max_iterations));
+  if (number_of_iterations >= max_iterations) {
+    irr = -1;
+  }
   return DBL2NUM(pow(1 + irr, 365) - 1);
 }
 
@@ -77,3 +71,14 @@ double get_derivative_for_x(double x, double amounts[], double investmentPreiods
     f_dash_x += (amounts[i] * investmentPreiods[i]) / pow(1 + x, investmentPreiods[i]);
   return -f_dash_x;
 }
+
+// Solving for 0 npv by bisection method
+  // double left_guess = -49.99/365.0, right_guess = 49.99/365.0;
+  // while((right_guess - left_guess) > (2 * delta)) {
+  //   double mid = (right_guess + left_guess) / 2;
+  //   if (get_fx(left_guess, amounts, investment_periods, length) * get_fx(mid, amounts, investment_periods, length) > 0)
+  //     left_guess = mid;
+  //   else
+  //     right_guess = mid;
+  // }
+  // double irr = (left_guess + right_guess) / 2.0;
