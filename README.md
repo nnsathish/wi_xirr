@@ -20,19 +20,19 @@ And then run
 
 ## Usage
 
-    include WiXirr
-    
-    # Cash Flow
-    amounts=[[1000, -600, -6000] 
-    dates=[Time.parse("1985-01-01").to_f, Time.parse("1990-01-01").to_f, Time.parse("1995-01-01").to_f] 
-    max_iterations=1000
-    initial_guess=0
+    require 'time'
 
-    result=WiXirr.calculate(amounts,dates,initial_guess,max_iterations)
+    # Cash Flow
+    amounts = [1000, -600, -6000]
+    dates = [Time.parse("1985-01-01").to_f, Time.parse("1990-01-01").to_f, Time.parse("1995-01-01").to_f]
+    max_iterations = 1000
+    initial_guess = 0
+
+    result = WiXirr.calculate(amounts, dates, initial_guess, max_iterations)
 
 ## Supported Versions
 
-Ruby 2.5
+Ruby 2.5 and later
 
 ## References
 
@@ -42,13 +42,7 @@ This gem was derived from the xirr gem, which supports both newtonian and bisect
 
 - Fork it 
 - Create your feature branch (git checkout -b my-new-feature)
-- Run specs (rake default)
+- Run specs (rake)
 - Commit your changes (git commit -am 'Add some feature')
 - Push to the branch (git push origin my-new-feature)
 - Create a new Pull Request
-
-
-  
-
-
-
